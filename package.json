@@ -1,0 +1,91 @@
+{
+	"name": "cpp-helper",
+	"displayName": "C++ Helper",
+	"description": "Create implementation for c++ function prototypes.",
+	"version": "0.0.1",
+	"icon": "images/icon.png",
+	"engines": {
+		"vscode": "^1.41.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:cpp-helper.create-implementation",
+		"onCommand:cpp-helper.create-header-guard",
+		"onLanguage:cpp"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/amir9480/vscode-cpp-helper"
+	},
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "cpp-helper.create-implementation",
+				"title": "Create Implementation"
+			},
+			{
+				"command": "cpp-helper.create-header-guard",
+				"title": "Create Header Guard"
+			}
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "resourceLangId == cpp",
+					"command": "cpp-helper.create-implementation",
+					"group": "C++ Helper@1"
+			  	},
+				{
+					"when": "resourceLangId == cpp",
+					"command": "cpp-helper.create-header-guard",
+					"group": "C++ Helper@2"
+			  	}
+			]
+		},
+		"configuration": [
+			{
+				"title": "C++ Helper",
+				"type": "object",
+				"properties": {
+					"CppHelper.SourcePattern": {
+						"type": "Array",
+						"default": [
+							"{FILE}.cpp",
+							"{FILE}.c",
+							"{FILE}.inl",
+							"/src/{FILE}.cpp",
+							"/src/{FILE}.inl"
+						],
+						"description": "Source file pattern for headers."
+					},
+					"CppHelper.HeaderGuardPattern": {
+						"type": "string",
+						"default": "__{FILE}_H__",
+						"description": "Header Guard Style."
+					}
+				}
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^5.2.7",
+		"@types/node": "^12.11.7",
+		"@types/vscode": "^1.41.0",
+		"glob": "^7.1.5",
+		"mocha": "^6.2.2",
+		"typescript": "^3.6.4",
+		"tslint": "^5.20.0",
+		"vscode-test": "^1.2.2"
+	}
+}
