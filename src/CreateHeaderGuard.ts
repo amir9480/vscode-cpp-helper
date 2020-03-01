@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 
+// Create header guard command
 export default function () {
     if (vscode.window.activeTextEditor && vscode.window.activeTextEditor.selection) {
         let fileName = vscode.window.activeTextEditor?.document.fileName;

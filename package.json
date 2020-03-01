@@ -4,6 +4,7 @@
 	"description": "Create implementation for c++ function prototypes.",
 	"version": "0.0.1",
 	"icon": "images/icon.png",
+	"publisher": "amiralizadeh9480",
 	"engines": {
 		"vscode": "^1.41.0"
 	},
@@ -13,7 +14,8 @@
 	"activationEvents": [
 		"onCommand:cpp-helper.create-implementation",
 		"onCommand:cpp-helper.create-header-guard",
-		"onLanguage:cpp"
+		"onLanguage:cpp",
+		"onLanguage:c"
 	],
 	"repository": {
 		"type": "git",
@@ -34,12 +36,12 @@
 		"menus": {
 			"editor/context": [
 				{
-					"when": "resourceLangId == cpp",
+					"when": "resourceLangId == cpp || resourceLangId == c",
 					"command": "cpp-helper.create-implementation",
 					"group": "C++ Helper@1"
 			  	},
 				{
-					"when": "resourceLangId == cpp",
+					"when": "resourceLangId == cpp || resourceLangId == c",
 					"command": "cpp-helper.create-header-guard",
 					"group": "C++ Helper@2"
 			  	}
@@ -53,11 +55,24 @@
 					"CppHelper.SourcePattern": {
 						"type": "Array",
 						"default": [
-							"{FILE}.cpp",
-							"{FILE}.c",
 							"{FILE}.inl",
+							"{FILE}.cpp",
+							"{FILE}.cxx",
+							"{FILE}.cc",
+							"{FILE}.cp",
+							"{FILE}.c",
+							"/src/{FILE}.inl",
 							"/src/{FILE}.cpp",
-							"/src/{FILE}.inl"
+							"/src/{FILE}.cxx",
+							"/src/{FILE}.cc",
+							"/src/{FILE}.cp",
+							"/src/{FILE}.c",
+							"/source/{FILE}.inl",
+							"/source/{FILE}.cpp",
+							"/source/{FILE}.cxx",
+							"/source/{FILE}.cc",
+							"/source/{FILE}.cp",
+							"/source/{FILE}.c"
 						],
 						"description": "Source file pattern for headers."
 					},

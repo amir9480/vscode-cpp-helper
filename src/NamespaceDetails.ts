@@ -6,11 +6,14 @@ export default class NamespaceDetails {
     public start: number = -1;
     public end: number = -1;
 
+    /**
+     * Generate code for namespace.
+     */
     public generateCode(): string {
         let result = "";
         let namespaceNames = this.namespaceNames();
         for (let i in namespaceNames) {
-            result += Helpers.indent("namespace " + namespaceNames[i] + "\n{\n", Number(i));
+            result += Helpers.indent("\nnamespace " + namespaceNames[i] + "\n{", Number(i));
         }
         for (let i in namespaceNames) {
             result += Helpers.indent("}\n", namespaceNames.length - Number(i) - 1);
@@ -18,10 +21,17 @@ export default class NamespaceDetails {
         return result;
     }
 
+    /**
+     * Name including parent namespace name.
+     * using for comparison two namespaces.
+     */
     public fullname(): string {
         return this.namespaceNames().join('::');
     }
 
+    /**
+     * Array of namespace parents and it self.
+     */
     public namespaceNames(): Array<string> {
         if (this.parent) {
             return this.parent.namespaceNames().concat([this.name]);
@@ -29,10 +39,16 @@ export default class NamespaceDetails {
         return [this.name];
     }
 
+    /**
+     * Regex to detect namespaces.
+     */
     static namespaceRegex(): string {
         return "namespace\\s+([\\w_][\\w\\d_]*)";
     }
 
+    /**
+     * Namespace to detect namespace scope.
+     */
     static namespaceContentRegex(): string {
         let namespaceContentRegex = "\\s*\\{([^\\{\\}]|(?R))*\\}";
         for (let i = 0; i < 5; i++) {
@@ -42,6 +58,11 @@ export default class NamespaceDetails {
         return namespaceContentRegex;
     }
 
+    /**
+     * Parse name
+     *
+     * @param source
+     */
     public static parseNamespaces(source: string): Array<NamespaceDetails> {
         let result: Array<NamespaceDetails> = [];
         let namespaceRegex = this.namespaceRegex();

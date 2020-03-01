@@ -13,13 +13,19 @@ export default class FunctionDetails {
     public start: number = -1;
     public end: number = -1;
 
+    /**
+     * Get Implementation code
+     *
+     * @param snippet
+     * @returns string
+     */
     public generteImplementation(snippet: boolean = false): string
     {
         let out = "";
         let before = this.before;
-        before = before.replace(/\s*(virtual|static)\s*/, '');
+        before = before.replace(/(virtual|static|explicit)\s*/, '');
         let after = this.after;
-        after = after.replace(/\s*(override)\s*/g, '');
+        after = after.replace(/(override|final)\s*/g, '');
         if (this.class && this.class.getTemplateParametersNested().length > 0) {
             out += 'template<' + this.class?.getTemplateParametersNested().join(', ') + '>\n';
         }
@@ -30,18 +36,27 @@ export default class FunctionDetails {
         if (this.class) {
             out += this.class.getNestedName() + '::';
         }
-        out += this.name + '(' + this.arguments + ')' + after + '\n{\n' + (snippet ? Helpers.spacer() + '${0}' : '') + '\n}\n';
+        out += this.name + '(' + this.arguments + ') ' + after + '\n{\n' + (snippet ? Helpers.spacer() + '${0}' : '') + '\n}\n';
         return out;
     }
 
+    /**
+     * Template parameter names only.
+     */
     public getTemplateNames(): string {
         return Helpers.templateNames(this.template).join(', ');
     }
 
+    /**
+     * Template parameters including parameter type.
+     */
     public getTemplateParameters(): string {
         return Helpers.templateParameters(this.template).join(', ');
     }
 
+    /**
+     * Get namespace of function.
+     */
     public getNamespace(): NamespaceDetails|null {
         if (this.class) {
             return this.class.namespace;

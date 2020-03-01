@@ -1,11 +1,11 @@
 # C++ Helper
 
 ![Screen Shot](/images/screenshot.gif)
-C++ Helper commands.
+C++ Helper extension for [vscode](https://code.visualstudio.com/).
 
 ## Features
 * Create implementation for c++ function prototypes.
-* create header guard for headers.
+* Create header guard for headers.
 
 ## Configuration
 
@@ -28,7 +28,7 @@ Where {FILE} is your active header file name.
 The pattern of header guard.
 Example:
 ```json
-"CppHelper.SourcePattern": "__{FILE}_H__"
+"CppHelper.SourcePattern": "{FILE}_H"
 ```
 Where {FILE} is your active header file name in UPPERCASE format.
 

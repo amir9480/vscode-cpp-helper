@@ -3,6 +3,14 @@ const fs = require('fs');
 const path = require('path');
 
 export default class Helpers {
+
+    /**
+     * Convert template complete string to parameter names only.
+     *
+     * @example template<typename T1, typename T2>  --->  T1, T2
+     *
+     * @param template
+     */
     public static templateNames(template: string) : Array<string> {
         return this.templateParameters(template).map(function (templ) {
             let match:any;
@@ -13,6 +21,13 @@ export default class Helpers {
         });
     }
 
+    /**
+     * Convert template complete string to parameter names with types only.
+     *
+     * @example template<typename T1, typename T2>  --->  typename T1, typename T2
+     *
+     * @param template
+     */
     public static templateParameters(template: string) : Array<string> {
         template = template.replace(/^\s*template\s*</, '');
         template = template.replace(/>$/, '');
@@ -22,6 +37,9 @@ export default class Helpers {
         return template.split(',').map((templ) => templ.trim());
     }
 
+    /**
+     * Returns space based on Indeting config for active editor.
+     */
     public static spacer() {
         const editor = vscode.window.activeTextEditor;
         if (editor && editor.options.insertSpaces) {
@@ -30,6 +48,12 @@ export default class Helpers {
         return '\t';
     }
 
+    /**
+     * Indent code.
+     *
+     * @param str
+     * @param count
+     */
     public static indent(str: string, count: number = 1): string {
         return this.spacer().repeat(count) + str.replace(/(\r\n|\r|\n)/g, '\n' + this.spacer().repeat(count)).replace(/\n\s+$/g, '\n');
     }
