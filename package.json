@@ -2,7 +2,7 @@
 	"name": "cpp-helper",
 	"displayName": "C++ Helper",
 	"description": "Create implementation for c++ function prototypes.",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"icon": "images/icon.png",
 	"publisher": "amiralizadeh9480",
 	"engines": {
@@ -39,12 +39,12 @@
 					"when": "resourceLangId == cpp || resourceLangId == c",
 					"command": "cpp-helper.create-implementation",
 					"group": "C++ Helper@1"
-			  	},
+				},
 				{
 					"when": "resourceLangId == cpp || resourceLangId == c",
 					"command": "cpp-helper.create-header-guard",
 					"group": "C++ Helper@2"
-			  	}
+				}
 			]
 		},
 		"configuration": [
