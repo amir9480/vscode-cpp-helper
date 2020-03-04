@@ -5,6 +5,7 @@ export default class NamespaceDetails {
     public name: string = "";
     public start: number = -1;
     public end: number = -1;
+    public contentStart: number = -1;
 
     /**
      * Generate code for namespace.
@@ -16,7 +17,7 @@ export default class NamespaceDetails {
             result += Helpers.indent("\nnamespace " + namespaceNames[i] + "\n{", Number(i));
         }
         for (let i in namespaceNames) {
-            result += Helpers.indent("}\n", namespaceNames.length - Number(i) - 1);
+            result += Helpers.indent("\n}", namespaceNames.length - Number(i) - 1);
         }
         return result;
     }
@@ -40,6 +41,16 @@ export default class NamespaceDetails {
     }
 
     /**
+     * Depth of nested namespace.
+     */
+    public depth(): number {
+        if (this.parent === null) {
+            return 0;
+        }
+        return this.parent.depth() + 1;
+    }
+
+    /**
      * Regex to detect namespaces.
      */
     static namespaceRegex(): string {
@@ -49,13 +60,8 @@ export default class NamespaceDetails {
     /**
      * Namespace to detect namespace scope.
      */
-    static namespaceContentRegex(): string {
-        let namespaceContentRegex = "\\s*\\{([^\\{\\}]|(?R))*\\}";
-        for (let i = 0; i < 5; i++) {
-            namespaceContentRegex = namespaceContentRegex.replace("?R", namespaceContentRegex);
-        }
-        namespaceContentRegex = namespaceContentRegex.replace("|(?R)", "");
-        return namespaceContentRegex;
+    public static namespaceContentRegex(): string {
+        return Helpers.scopeRegex;
     }
 
     /**
@@ -74,6 +80,7 @@ export default class NamespaceDetails {
             if (match2 = regex2.exec(source.substr(match.index + match[0].length))) {
                 let namespace = new NamespaceDetails;
                 namespace.start = match.index;
+                namespace.contentStart = match.index + match[0].length + match2[1].length;
                 namespace.end = match.index + match[0].length + match2[0].length;
                 namespace.name = match[1];
                 for (let i in result) {

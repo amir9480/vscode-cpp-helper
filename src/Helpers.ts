@@ -4,6 +4,8 @@ const path = require('path');
 
 export default class Helpers {
 
+    public static scopeRegex: string = Helpers.recursiveRegex("(\\s*\\{)([^\\{\\}]|(?R))*\\}");
+
     /**
      * Convert template complete string to parameter names only.
      *
@@ -55,13 +57,16 @@ export default class Helpers {
      * @param count
      */
     public static indent(str: string, count: number = 1): string {
+        if (str.match(/^(\r\n|\r|\n)/g)) {
+            return str.replace(/(\r\n|\r|\n)/g, '\n' + this.spacer().repeat(count)).replace(/\n\s+$/g, '\n');
+        }
         return this.spacer().repeat(count) + str.replace(/(\r\n|\r|\n)/g, '\n' + this.spacer().repeat(count)).replace(/\n\s+$/g, '\n');
     }
 
     /**
-     * Opens source file of a active editor.
+     * Opens source file of a active header file editor.
      */
-    public static findSourceFile(): Promise<vscode.TextEditor> {
+    public static openSourceFile(): Promise<vscode.TextEditor> {
         let patterns: any = vscode.workspace.getConfiguration("CppHelper").get<Array<string>>('SourcePattern');
         return new Promise(function (resolve, reject) {
             let fileName = vscode.window.activeTextEditor?.document.fileName;
@@ -92,5 +97,20 @@ export default class Helpers {
                 resolve(vscode.window.activeTextEditor);
             }
         });
+    }
+
+    /**
+     * Create recursive regex with limited depth.
+     *
+     * @param regex
+     * @param depth
+     */
+    public static recursiveRegex(regex: string, depth: number = 8): string {
+        let result: string = regex;
+        for (let i = 0; i < depth; i++) {
+            result = result.replace("?R", regex);
+        }
+        result = result.replace("|(?R)", "");
+        return result;
     }
 }

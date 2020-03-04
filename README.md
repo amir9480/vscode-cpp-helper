@@ -4,8 +4,8 @@
 C++ Helper extension for [vscode](https://code.visualstudio.com/).
 
 ## Features
-* Create implementation for c++ function prototypes.
-* Create header guard for headers.
+* Generating implementation for c++ declarations.
+* Generating header guard for headers.
 
 ## Configuration
 
@@ -22,7 +22,7 @@ Example:
 ]
 ```
 Where {FILE} is your active header file name.
-> If you don't want a relative pattern then add a `/` as first character.
+> If you don't want a relative pattern then put a `/` as first character.
 
 ### CppHelper.HeaderGuardPattern:
 The pattern of header guard.
@@ -33,8 +33,13 @@ Example:
 Where {FILE} is your active header file name in UPPERCASE format.
 
 ## Known Issues
-If you implement a previously implemented function then it will implement it again and duplicate implementation will happen.
+If you implement a previously implemented function duplicate implementation will happen.
 
-Also, this extension created using regexes and there is no parser/compiler.
+This extension created using regex and there is no parser/compiler.
 so any wrong implementation may happen.
-If you find any wrong implementation please let me know in [issues](https://github.com/amir9480/vscode-cpp-helper/issues) and also don't forget to send your code sample.
+If you found any wrong implementation please let me know in [issues](https://github.com/amir9480/vscode-cpp-helper/issues) and also don't forget to send your code sample.
+
+## Change Log
+
+### 0.0.3
+* Keeping the order of implementations synced to declarations as much as possible.

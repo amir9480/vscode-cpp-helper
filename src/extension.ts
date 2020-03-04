@@ -6,8 +6,8 @@ import * as vscode from 'vscode';
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 	showWelcomeMessage(context);
-	context.subscriptions.push(vscode.commands.registerCommand('cpp-helper.create-implementation', require('./CreateImplementation').default));
-	context.subscriptions.push(vscode.commands.registerCommand('cpp-helper.create-header-guard', require('./CreateHeaderGuard').default));
+	context.subscriptions.push(vscode.commands.registerCommand('cpp-helper.create-implementation', require('./commands/CreateImplementation').default));
+	context.subscriptions.push(vscode.commands.registerCommand('cpp-helper.create-header-guard', require('./commands/CreateHeaderGuard').default));
 }
 
 // this method is called when your extension is deactivated
