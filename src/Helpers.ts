@@ -6,6 +6,8 @@ export default class Helpers {
 
     public static scopeRegex: string = Helpers.recursiveRegex("(\\s*\\{)([^\\{\\}]|(?R))*\\}");
 
+    public static templateRegex: string = "((template\\s*<([\\w\\d_\\,\\s\\.\\=]*)>)[\\s\\r\\n]*)?";
+
     /**
      * Convert template complete string to parameter names only.
      *
@@ -14,7 +16,7 @@ export default class Helpers {
      * @param template
      */
     public static templateNames(template: string) : Array<string> {
-        return this.templateParameters(template).map(function (templ) {
+        return this.templateParameters(Helpers.removeArgumentDefault(template)).map(function (templ) {
             let match:any;
             if (match =  /^(([\w_][\w\d_]*\s+)+)([\w_][\w\d_]*)$/g.exec(templ)) {
                 return match[3];
@@ -112,5 +114,14 @@ export default class Helpers {
         }
         result = result.replace("|(?R)", "");
         return result;
+    }
+
+    /**
+     * Remove default value from arguments.
+     *
+     * @param args
+     */
+    public static removeArgumentDefault(args: string): string {
+        return args.replace(/([^=^,]+)(\s+=\s*[^\,^\)^>]*)/g, '$1').replace(/([^=^,]+)(=\s*[^\,]*)/g, '$1').trim();
     }
 }

@@ -53,7 +53,7 @@
 				"type": "object",
 				"properties": {
 					"CppHelper.SourcePattern": {
-						"type": "Array",
+						"type": "array",
 						"default": [
 							"{FILE}.inl",
 							"{FILE}.cpp",

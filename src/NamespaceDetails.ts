@@ -65,7 +65,7 @@ export default class NamespaceDetails {
     }
 
     /**
-     * Parse name
+     * Parse namespaces
      *
      * @param source
      */
@@ -77,7 +77,7 @@ export default class NamespaceDetails {
         let regex = new RegExp(namespaceRegex, 'gm');
         while (match = regex.exec(source)) {
             let regex2 = new RegExp(namespaceContentRegex, 'gm');
-            if (match2 = regex2.exec(source.substr(match.index + match[0].length))) {
+            if (match2 = regex2.exec(source.substr(match.index + match[0].length - 1))) {
                 let namespace = new NamespaceDetails;
                 namespace.start = match.index;
                 namespace.contentStart = match.index + match[0].length + match2[1].length;

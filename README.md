@@ -41,5 +41,12 @@ If you found any wrong implementation please let me know in [issues](https://git
 
 ## Change Log
 
+### 0.0.4
+* Argument with default value implemention bug fixed.
+* Class template specialization support added.
+* Regex to find previous implemention improved.
+* Bug with `operator()` fixed.
+* `SourcePattern` configuration bug fixed.
+
 ### 0.0.3
 * Keeping the order of implementations synced to declarations as much as possible.

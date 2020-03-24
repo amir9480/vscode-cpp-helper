@@ -1,13 +1,15 @@
 import * as vscode from 'vscode';
-import FunctionDetails from '../FunctionDetails';
 import NamespaceDetails from '../NamespaceDetails';
 import Helpers from "../Helpers";
+import Container from '../Container';
 
 function create(activeEditor: vscode.TextEditor, selections: vscode.Selection[], sourceEditor: vscode.TextEditor) {
     let selection = selections.shift();
     if (selection) {
         let code = activeEditor.document.getText();
-        let funcDetails = FunctionDetails.parsePosition(code, activeEditor.document.offsetAt(selection.start), true);
+        let container = new Container(code);
+        let funcDetails = container.findFunction(activeEditor.document.offsetAt(selection.start));
+
         if (funcDetails) { // If was null then selection is not a c++ function declration
             let imp = '\n' + funcDetails?.generteImplementation(true);
             if (funcDetails && imp) {
@@ -50,29 +52,39 @@ function create(activeEditor: vscode.TextEditor, selections: vscode.Selection[],
                 }
                 if (funcDetails.previouses.length > 0) {
                     let index = -1;
-                    for (let i in funcDetails.previouses) {
-                        let previous = funcDetails.previouses[i];
-                        let ImplementationRegex = (previous.class? previous.class.name + '\\s*(<[^>]*>)?\\s*::\\s*' : '') + previous.name + '\\([^\\)]*\\)[^{]*\\{';
-                        let source = sourceEditor.document.getText();
-                        let regex = new RegExp(ImplementationRegex, 'gm');
-                        let match = null, match2;
-                        while (match = regex.exec(source)) {
-                            let regex2 = new RegExp(Helpers.scopeRegex, 'gm');
-                            if ((match2 = regex2.exec(source.substr(match.index + match[0].length - 1)))) {
-                                index = match.index + match[0].length + match2[0].length;
+                    let previousesReverse = funcDetails.previouses.reverse();
+                    for (let i in previousesReverse) {
+                        if (index !== -1) {
+                            break;
+                        }
+                        try {
+                            let previous = previousesReverse[i];
+                            if ((previous.getNamespace() === null && funcDetails.getNamespace() === null) || (previous.getNamespace()?.fullname() === funcDetails.getNamespace()?.fullname())) {
+                                let ImplementationRegex = (previous.class? previous.class.name + '\\s*(<[^>]*>)?\\s*::\\s*' : '') + previous.name + '\\([^\\)]*\\)[^{]*\\{';
+                                let source = sourceEditor.document.getText();
+                                let regex = new RegExp(ImplementationRegex, 'gm');
+                                let match = null, match2;
+                                if (match = regex.exec(source)) {
+                                    let regex2 = new RegExp(Helpers.scopeRegex, 'gm');
+                                    if ((match2 = regex2.exec(source.substr(match.index + match[0].length - 1)))) {
+                                        index = match.index + match[0].length + match2[0].length;
+                                    }
+                                }
                             }
+                        } catch (e) {
+                            console.error(e);
                         }
                     }
                     if (index !== -1) {
                         position = sourceEditor.document.positionAt(index);
                         imp = '\n' + imp;
-                    } else  if (funcDetails.getNamespace() !== null) {
+                    } else  if (funcDetails.getNamespace() !== null && sourceEditor !== activeEditor) {
                         imp = Helpers.indent(imp);
                     }
                     if (index === -1) {
                         imp = imp + '\n';
                     }
-                } else  if (funcDetails.getNamespace() !== null) {
+                } else  if (funcDetails.getNamespace() !== null && sourceEditor !== activeEditor) {
                     imp = Helpers.indent(imp);
                 }
                 if (funcDetails.previouses.length === 0) {
