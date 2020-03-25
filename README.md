@@ -41,6 +41,9 @@ If you found any wrong implementation please let me know in [issues](https://git
 
 ## Change Log
 
+### 0.0.5
+* Fix bug in linux. (#1, #2)
+
 ### 0.0.4
 * Argument with default value implemention bug fixed.
 * Class template specialization support added.
