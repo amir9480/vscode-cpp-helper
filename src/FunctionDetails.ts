@@ -77,21 +77,21 @@ export default class FunctionDetails {
     public static parseFunctions(source:string) : Array<FunctionDetails> {
         let result:FunctionDetails[] = [];
         let templateRegex = Helpers.templateRegex;
-        let returnTypeRegex = "(([\\w_][\\w\\d<>_\\[\\]]*\\s+)*[\\w_][\\w\\d<>_\\[\\]\\(\\)\\.]*(\\**)(\\&{1,2})?)?";
+        let returnTypeRegex = "(([\\w_][\\w\\d<>_\\[\\]]*\\s+)*([\\w_][\\w\\d<>_\\[\\]\\(\\)\\.]*|::)+(\\s+|(\\s*((\\*+)|(\\&{1,2})|(\\*+)(\\&{1,2}))\\s*)))?";
         let funcRegex = "((operator\\s*([^\\(]|\\(\\))+)|(~?[\\w_][\\w\\d_]*))";
         let funcParamsRegex = "\\((.*)\\)";
         let afterParamsRegex = "(.*)\\;";
 
-        let funcRegexStr = templateRegex + returnTypeRegex + '\\s+' + funcRegex + '\\s*' + funcParamsRegex + '\\s*' + afterParamsRegex;
+        let funcRegexStr = templateRegex + returnTypeRegex + '\\s*' + funcRegex + '\\s*' + funcParamsRegex + '\\s*' + afterParamsRegex;
         let regex = new RegExp(funcRegexStr, 'gm');
         let match = null, match2 = null;
         while (match = regex.exec(source)) {
             let funcDetails = new FunctionDetails;
             funcDetails.template = match[2] ? match[2] : "";
-            funcDetails.name = match[8];
-            funcDetails.arguments = match[12] ? match[12] : "";
-            funcDetails.before = match[4] ? match[4] : "";
-            funcDetails.after = match[13] ? match[13] : "";
+            funcDetails.name = match[14];
+            funcDetails.arguments = match[18] ? match[18] : "";
+            funcDetails.before = match[4] ? match[4].trim() : "";
+            funcDetails.after = match[19] ? match[19] : "";
             funcDetails.start = match.index;
             funcDetails.end = match.index + match[0].length;
             result.push(funcDetails);
