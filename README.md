@@ -41,6 +41,9 @@ If you found any wrong implementation please let me know in [issues](https://git
 
 ## Change Log
 
+### 0.0.7
+* Bug #5 fixed.
+
 ### 0.0.6
 * Bug #4 fixed.
 
