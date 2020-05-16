@@ -29,6 +29,10 @@
 				"title": "Create Implementation"
 			},
 			{
+				"command": "cpp-helper.create-implementation-here",
+				"title": "Create Implementation Here"
+			},
+			{
 				"command": "cpp-helper.create-header-guard",
 				"title": "Create Header Guard"
 			}
@@ -36,14 +40,19 @@
 		"menus": {
 			"editor/context": [
 				{
-					"when": "resourceLangId == cpp || resourceLangId == c",
+					"when": "resourceLangId =~ /^c|cpp$/ && config.CppHelper.ContextCreateImplementation",
 					"command": "cpp-helper.create-implementation",
 					"group": "C++ Helper@1"
 				},
 				{
-					"when": "resourceLangId == cpp || resourceLangId == c",
-					"command": "cpp-helper.create-header-guard",
+					"when": "resourceLangId =~ /^c|cpp$/ && config.CppHelper.ContextCreateImplementationHere",
+					"command": "cpp-helper.create-implementation-here",
 					"group": "C++ Helper@2"
+				},
+				{
+					"when": "resourceLangId =~ /^c|cpp$/ && config.CppHelper.ContextCreateHeaderGuard",
+					"command": "cpp-helper.create-header-guard",
+					"group": "C++ Helper@3"
 				}
 			]
 		},
@@ -80,6 +89,21 @@
 						"type": "string",
 						"default": "__{FILE}_H__",
 						"description": "Header Guard Style."
+					},
+					"CppHelper.ContextCreateImplementation": {
+						"type": "boolean",
+						"default": true,
+						"description": "Show \"Create Implementation\" in context menu"
+					},
+					"CppHelper.ContextCreateImplementationHere": {
+						"type": "boolean",
+						"default": true,
+						"description": "Show \"Create ImplementationHere\" in context menu"
+					},
+					"CppHelper.ContextCreateHeaderGuard": {
+						"type": "boolean",
+						"default": true,
+						"description": "Show \"Create Header Guard\" in context menu"
 					}
 				}
 			}

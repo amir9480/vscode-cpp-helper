@@ -3,7 +3,7 @@ import NamespaceDetails from '../NamespaceDetails';
 import Helpers from "../Helpers";
 import Container from '../Container';
 
-function create(activeEditor: vscode.TextEditor, selections: vscode.Selection[], sourceEditor: vscode.TextEditor) {
+export function create(activeEditor: vscode.TextEditor, selections: vscode.Selection[], sourceEditor: vscode.TextEditor) {
     let selection = selections.shift();
     if (selection) {
         let code = activeEditor.document.getText();
