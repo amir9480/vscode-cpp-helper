@@ -80,9 +80,9 @@ export default class FunctionDetails {
         });
         let result:FunctionDetails[] = [];
         let templateRegex = Helpers.templateRegex;
-        let returnTypeRegex = "((([\\w_][\\w\\d<>_\\[\\]]*\\s+)*[\\w_][\\w\\d<>_\\[\\]\\(\\)\\.:]*)(\\**\\&{0,2}))?";
+        let returnTypeRegex = "((([\\w_][\\w\\d<>_\\[\\]\\.:\,]*\\s+)*[\\w_][\\w\\d<>_\\[\\]\\(\\)\\.:\,]*)(\\**\\&{0,2}))?";
         let funcRegex = "((\\**\\&{0,2})((operator\\s*([^\\(]|\\(\\))+)|(~?[\\w_][\\w\\d_]*)))";
-        let funcParamsRegex = "\\(([^\\)]*)\\)";
+        let funcParamsRegex = "\\((([^\\)]*)|(.+\\([^\\)]*\\).+))\\)";
         let afterParamsRegex = "([^;^)]*)\\;";
 
         let funcRegexStr = templateRegex + returnTypeRegex + '\\s+' + funcRegex + '\\s*' + funcParamsRegex + '\\s*' + afterParamsRegex;
@@ -94,7 +94,7 @@ export default class FunctionDetails {
             funcDetails.name = match[10];
             funcDetails.arguments = match[14] ? match[14] : "";
             funcDetails.before = ((match[5] ? match[5].trim() : "") + (match[7] ? match[7].trim() : "") + (match[9] ? match[9].trim() : "")).replace(/(public|private|protected)\s*:\s*/, '');
-            funcDetails.after = match[15] ? match[15] : "";
+            funcDetails.after = match[17] ? match[17] : "";
             funcDetails.start = match.index;
             funcDetails.end = match.index + match[0].length;
             result.push(funcDetails);
