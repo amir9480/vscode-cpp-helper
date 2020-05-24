@@ -116,7 +116,7 @@ export default function () {
             var selections = activeEditor.selections;
             selections = selections.sort((a:vscode.Selection, b: vscode.Selection) => a.start.isAfter(b.start) ? 1 : -1);
             Helpers.openSourceFile().then(function (doc : vscode.TextEditor) {
-                create(activeEditor, activeEditor.selections, doc);
+                create(activeEditor, selections, doc);
             });
         }
     }
