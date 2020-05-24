@@ -23,7 +23,7 @@ function showWelcomeMessage(context: vscode.ExtensionContext) {
 	if (previousVersion === undefined || previousVersion.length === 0) {
 		message = "Thanks for using C++ Helper.";
 	} else if (currentVersion !== previousVersion && (
-		(previousVersionArray[0] === currentVersionArray[0] && previousVersionArray[1] === currentVersionArray[1] && previousVersionArray[2] < currentVersionArray[2]) ||
+		// (previousVersionArray[0] === currentVersionArray[0] && previousVersionArray[1] === currentVersionArray[1] && previousVersionArray[2] < currentVersionArray[2]) ||
 		(previousVersionArray[0] === currentVersionArray[0] && previousVersionArray[1] < currentVersionArray[1]) ||
 		(previousVersionArray[0] < currentVersionArray[0])
 	)
