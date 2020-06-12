@@ -38,6 +38,9 @@ Show or hide "Create Implementation" in context menu.
 ### CppHelper.ContextCreateImplementationHere
 Show or hide "Create Implementation Here" in context menu.
 
+### CppHelper.ContextCopyImplementation
+Show or hide "Copy Implementation" in context menu.
+
 ### CppHelper.ContextCreateHeaderGuard
 Show or hide "Create Header Guard" in context menu.
 

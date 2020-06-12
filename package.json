@@ -13,6 +13,8 @@
 	],
 	"activationEvents": [
 		"onCommand:cpp-helper.create-implementation",
+		"onCommand:cpp-helper.create-implementation-here",
+		"onCommand:cpp-helper.copy-implementation",
 		"onCommand:cpp-helper.create-header-guard",
 		"onLanguage:cpp",
 		"onLanguage:c"
@@ -33,6 +35,10 @@
 				"title": "Create Implementation Here"
 			},
 			{
+				"command": "cpp-helper.copy-implementation",
+				"title": "Copy Implementation"
+			},
+			{
 				"command": "cpp-helper.create-header-guard",
 				"title": "Create Header Guard"
 			}
@@ -50,9 +56,14 @@
 					"group": "C++ Helper@2"
 				},
 				{
+					"when": "resourceLangId =~ /^c|cpp$/ && config.CppHelper.ContextCopyImplementation",
+					"command": "cpp-helper.copy-implementation",
+					"group": "C++ Helper@3"
+				},
+				{
 					"when": "resourceLangId =~ /^c|cpp$/ && config.CppHelper.ContextCreateHeaderGuard",
 					"command": "cpp-helper.create-header-guard",
-					"group": "C++ Helper@3"
+					"group": "C++ Helper@4"
 				}
 			]
 		},
@@ -98,7 +109,12 @@
 					"CppHelper.ContextCreateImplementationHere": {
 						"type": "boolean",
 						"default": true,
-						"description": "Show \"Create ImplementationHere\" in context menu"
+						"description": "Show \"Create Implementation Here\" in context menu"
+					},
+					"CppHelper.ContextCopyImplementation": {
+						"type": "boolean",
+						"default": true,
+						"description": "Show \"Copy Implementation\" in context menu"
 					},
 					"CppHelper.ContextCreateHeaderGuard": {
 						"type": "boolean",
