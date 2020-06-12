@@ -2,7 +2,7 @@
 	"name": "cpp-helper",
 	"displayName": "C++ Helper",
 	"description": "Create implementation for c++ function prototypes.",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"icon": "images/icon.png",
 	"publisher": "amiralizadeh9480",
 	"engines": {
@@ -123,7 +123,10 @@
 					},
 					"CppHelper.SourceNotFoundBehavior": {
 						"type": "string",
-						"enum": ["Implement in same file", "Create source file"],
+						"enum": [
+							"Implement in same file",
+							"Create source file"
+						],
 						"default": "Implement in same file",
 						"description": "What happen if source file of a header file not found."
 					}
