@@ -58,6 +58,12 @@ If you found any wrong implementation please let me know in [issues](https://git
 
 ## Change Log
 
+### 0.2.0
+* Fix bugs (#12, #13).
+* `Copy Implementation` to clipboard command added (#11).
+* Create source file if not found (#14).
+* Improved order of implementation.
+
 ### 0.1.0
 * Add `Create Implementation Here` command. (#7)
 * Add setting to hide context menu items.
