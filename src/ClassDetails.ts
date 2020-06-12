@@ -73,7 +73,7 @@ export default class ClassDetails {
     public static parseClasses(source: string): Array<ClassDetails> {
         let result: Array<ClassDetails> = [];
         let templateRegex = Helpers.templateRegex;
-        let classRegex = "(class|struct)\\s+([\\w\\d_\\(\\)]+\\s+)*([\\w_][\\w\\d_]*)\\s*(<.*>)?\\s*(\:[^{]+)?\\s*{";
+        let classRegex = "(class|struct)\\s+([\\w\\d_\\(\\)]+\\s+)*([\\w_][\\w\\d_:]*)\\s*(<.*>)?\\s*(\:[^{]+)?\\s*{";
         let classContentRegex = Helpers.scopeRegex;
         let match: any, match2: any;
         let regex = new RegExp(templateRegex + classRegex, 'gm');

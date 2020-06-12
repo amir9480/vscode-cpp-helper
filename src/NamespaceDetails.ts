@@ -54,7 +54,7 @@ export default class NamespaceDetails {
      * Regex to detect namespaces.
      */
     static namespaceRegex(): string {
-        return "namespace\\s+([\\w_][\\w\\d_]*)";
+        return "namespace\\s+([\\w_][\\w\\d_:]*)";
     }
 
     /**
