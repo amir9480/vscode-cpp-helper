@@ -120,6 +120,12 @@
 						"type": "boolean",
 						"default": true,
 						"description": "Show \"Create Header Guard\" in context menu"
+					},
+					"CppHelper.SourceNotFoundBehavior": {
+						"type": "string",
+						"enum": ["Implement in same file", "Create source file"],
+						"default": "Implement in same file",
+						"description": "What happen if source file of a header file not found."
 					}
 				}
 			}

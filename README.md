@@ -44,6 +44,11 @@ Show or hide "Copy Implementation" in context menu.
 ### CppHelper.ContextCreateHeaderGuard
 Show or hide "Create Header Guard" in context menu.
 
+### CppHelper.SourceNotFoundBehavior
+What happen if source file of a header file not found.
+* Implement in same file
+* Create source file
+
 ## Known Issues
 If you implement a previously implemented function duplicate implementation will happen.
 

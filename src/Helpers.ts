@@ -70,6 +70,7 @@ export default class Helpers {
      */
     public static openSourceFile(): Promise<vscode.TextEditor> {
         let patterns: any = vscode.workspace.getConfiguration("CppHelper").get<Array<string>>('SourcePattern');
+        let notFoundBehavior: any = vscode.workspace.getConfiguration("CppHelper").get<string>('SourceNotFoundBehavior');
         return new Promise(function (resolve, reject) {
             let fileName = vscode.window.activeTextEditor?.document.fileName;
             if (fileName) {
@@ -93,6 +94,25 @@ export default class Helpers {
                                         });
                                 });
                             return;
+                        } else if (notFoundBehavior === 'Create source file' && extension?.toLowerCase() !== 'cpp') {
+                            let workspaceEdit = new vscode.WorkspaceEdit;
+                            workspaceEdit.createFile(vscode.Uri.file(directory + '/' + name + '.cpp'), {overwrite: false, ignoreIfExists: true});
+                            return vscode.workspace.applyEdit(workspaceEdit)
+                                .then(function (result: boolean) {
+                                    if (result) {
+                                        return vscode.workspace.openTextDocument(directory + '/' + name + '.cpp')
+                                            .then((doc: vscode.TextDocument) => {
+                                                vscode.window.showTextDocument(doc, 1, true)
+                                                    .then(function (textEditor: vscode.TextEditor) {
+                                                        textEditor.insertSnippet(new vscode.SnippetString("#include \"" + name + "." + extension + "\"\n"))
+                                                            .then(function () {
+                                                                resolve(textEditor);
+                                                            });
+                                                    });
+                                            });
+                                    }
+                                    resolve(vscode.window.activeTextEditor);
+                                });
                         }
                     }
                 }
