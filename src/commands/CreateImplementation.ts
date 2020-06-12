@@ -64,7 +64,7 @@ export function create(activeEditor: vscode.TextEditor, selections: vscode.Selec
                                 let source = sourceEditor.document.getText();
                                 let regex = new RegExp(ImplementationRegex, 'gm');
                                 let match = null, match2;
-                                if (match = regex.exec(source)) {
+                                while (match = regex.exec(source)) {
                                     let regex2 = new RegExp(Helpers.scopeRegex, 'gm');
                                     if ((match2 = regex2.exec(source.substr(match.index + match[0].length - 1)))) {
                                         index = match.index + match[0].length + match2[0].length;
