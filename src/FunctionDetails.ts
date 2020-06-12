@@ -25,17 +25,18 @@ export default class FunctionDetails {
     {
         let out = "";
         let before = this.before;
-        before = before.replace(/(virtual|static|explicit)\s*/, '');
+        let isMemberFunction = this.before.indexOf('friend') === -1;
+        before = before.replace(/(virtual|static|explicit|friend)\s*/, '');
         let after = this.after;
         after = after.replace(/(override|final)\s*/g, '');
-        if (this.class && this.class.getTemplateParametersNested().length > 0) {
+        if (this.class && isMemberFunction && this.class.getTemplateParametersNested().length > 0) {
             out += 'template<' + Helpers.removeArgumentDefault(this.class?.getTemplateParametersNested().join(', ')) + '>\n';
         }
         if (this.template.length > 0 ) {
             out += 'template<' + Helpers.removeArgumentDefault(this.getTemplateParameters()) + '>\n';
         }
         out += before + (before.length > 0 ? ' ' : '');
-        if (this.class) {
+        if (this.class && isMemberFunction) {
             out += this.class.getNestedName() + '::';
         }
         out += this.name + '(' + Helpers.removeArgumentDefault(this.arguments) + ') ' + after;
