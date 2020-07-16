@@ -12,6 +12,7 @@ export default class FunctionDetails {
     public namespace:NamespaceDetails|null = null;
     public start: number = -1;
     public end: number = -1;
+    public castOperator: boolean = false;
     public previouses: FunctionDetails[] = [];
 
     /**
@@ -35,11 +36,17 @@ export default class FunctionDetails {
         if (this.template.length > 0 ) {
             out += 'template<' + Helpers.removeArgumentDefault(this.getTemplateParameters()) + '>\n';
         }
-        out += before + (before.length > 0 ? ' ' : '');
+        if (this.castOperator === false) {
+            out += before + (before.length > 0 ? ' ' : '');
+        }
         if (this.class && isMemberFunction) {
             out += this.class.getNestedName() + '::';
+            if (this.castOperator) {
+                out += this.before + ' ';
+            }
         }
         out += this.name + '(' + Helpers.removeArgumentDefault(this.arguments) + ') ' + after;
+
         if (includeBody) {
             out += '\n{\n' + (snippet ? Helpers.spacer() + '${0}' : '') + '\n}';
         }
@@ -82,7 +89,7 @@ export default class FunctionDetails {
         let result:FunctionDetails[] = [];
         let templateRegex = Helpers.templateRegex;
         let returnTypeRegex = "((([\\w_][\\w\\d<>_\\[\\]\\.:\,]*\\s+)*[\\w_][\\w\\d<>_\\[\\]\\(\\)\\.:\,]*)(\\**\\&{0,2}))?";
-        let funcRegex = "((\\**\\&{0,2})((operator\\s*([^\\(]|\\(\\))+)|(~?[\\w_][\\w\\d_]*)))";
+        let funcRegex = "((\\**\\&{0,2})((operator\\s*([+-=*\\/%!<>&|~\\[\\]^&\\.\\,]\\s*|\\(\\))+)|(~?[\\w_][\\w\\d_]*)))";
         let funcParamsRegex = "\\((([^\\)]*)|(.+\\([^\\)]*\\).+))\\)";
         let afterParamsRegex = "([^;^)]*)\\;";
 
@@ -98,6 +105,9 @@ export default class FunctionDetails {
             funcDetails.after = match[17] ? match[17] : "";
             funcDetails.start = match.index;
             funcDetails.end = match.index + match[0].length;
+            if (funcDetails.before === 'operator') {
+                funcDetails.castOperator = true;
+            }
             result.push(funcDetails);
         }
         return result;

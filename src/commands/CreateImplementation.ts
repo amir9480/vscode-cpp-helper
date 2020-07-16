@@ -60,9 +60,9 @@ export function create(activeEditor: vscode.TextEditor, selections: vscode.Selec
                         try {
                             let previous = previousesReverse[i];
                             if ((previous.getNamespace() === null && funcDetails.getNamespace() === null) || (previous.getNamespace()?.fullname() === funcDetails.getNamespace()?.fullname())) {
-                                let ImplementationRegex = (previous.class? previous.class.name + '\\s*(<[^>]*>)?\\s*::\\s*' : '') + previous.name + '\\([^\\)]*\\)[^{]*\\{';
+                                let implementationRegex = (previous.class? previous.class.name + '\\s*(<[^>]*>)?\\s*::\\s*' : '') + (previous.castOperator ? previous.before + '\\s*' : '') + previous.name + '\\s*\\([^\\)]*\\)[^{]*\\{';
                                 let source = sourceEditor.document.getText();
-                                let regex = new RegExp(ImplementationRegex, 'gm');
+                                let regex = new RegExp(implementationRegex, 'gm');
                                 let match = null, match2;
                                 while (match = regex.exec(source)) {
                                     let regex2 = new RegExp(Helpers.scopeRegex, 'gm');
@@ -76,7 +76,7 @@ export function create(activeEditor: vscode.TextEditor, selections: vscode.Selec
                         }
                     }
                     if (index !== -1) {
-                        position = sourceEditor.document.positionAt(index);
+                        position = sourceEditor.document.positionAt(index - (sourceEditor.document.eol === vscode.EndOfLine.LF ? 1 : 0));
                         imp = '\n' + imp;
                     } else  if (funcDetails.getNamespace() !== null && sourceEditor !== activeEditor) {
                         imp = Helpers.indent(imp);

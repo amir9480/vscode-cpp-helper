@@ -25,6 +25,8 @@ struct Test
     std::tuple<int, float> func5(std::function<void(int, float)>&& a);
 
     Test& operator = (const Test& _other);
+
+    operator float () const;
 };
 
 struct TestChild : public Test

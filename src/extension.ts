@@ -24,18 +24,18 @@ function showWelcomeMessage(context: vscode.ExtensionContext) {
 	if (previousVersion === undefined || previousVersion.length === 0) {
 		message = "Thanks for using C++ Helper.";
 	} else if (currentVersion !== previousVersion && (
-		// (previousVersionArray[0] === currentVersionArray[0] && previousVersionArray[1] === currentVersionArray[1] && previousVersionArray[2] < currentVersionArray[2]) ||
+		(previousVersionArray[0] === currentVersionArray[0] && previousVersionArray[1] === currentVersionArray[1] && previousVersionArray[2] < currentVersionArray[2]) ||
 		(previousVersionArray[0] === currentVersionArray[0] && previousVersionArray[1] < currentVersionArray[1]) ||
 		(previousVersionArray[0] < currentVersionArray[0])
 	)
 	) {
-		message = "C++ Helper updated to " + currentVersion;
+		message = "C++ Helper updated to " + currentVersion + ". Cast operators now supported.";
 	}
 	if (message) {
-		vscode.window.showInformationMessage(message, '⭐️ Star on Github', '🐞 Report Bug')
+		vscode.window.showInformationMessage(message, '⭐️ Rate', '🐞 Report Bug')
 			.then(function (val: string | undefined) {
 				if (val === '⭐️ Rate') {
-					vscode.env.openExternal(vscode.Uri.parse('https://marketplace.visualstudio.com/items?itemName=amiralizadeh9480.cpp-helper'));
+					vscode.env.openExternal(vscode.Uri.parse('https://marketplace.visualstudio.com/items?itemName=amiralizadeh9480.cpp-helper&ssr=false#review-details'));
 				} else if (val === '🐞 Report Bug') {
 					vscode.env.openExternal(vscode.Uri.parse('https://github.com/amir9480/vscode-cpp-helper/issues'));
 				} else if (val === '⭐️ Star on Github') {

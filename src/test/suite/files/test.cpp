@@ -48,6 +48,11 @@ Test& Test::operator = (const Test& _other)
 
 }
 
+Test::operator float() const
+{
+
+}
+
 void TestChild::funcchild(int a)
 {
 

@@ -58,6 +58,11 @@ If you found any wrong implementation please let me know in [issues](https://git
 
 ## Change Log
 
+### 0.2.1
+* Fix code indent bug when EOL was `LF`.
+* Fix member `operator +`, `operator -` bug.
+* Cast operator support added.
+
 ### 0.2.0
 * Fix bugs (#12, #13).
 * `Copy Implementation` to clipboard command added (#11).
