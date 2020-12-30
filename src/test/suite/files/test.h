@@ -34,6 +34,18 @@ struct TestChild : public Test
     void funcchild(int a);
 };
 
+class TestFinal final
+{
+public:
+    void test(int a);
+};
+
+class TestFinalChild final : public Test
+{
+public:
+    void test(int a);
+};
+
 template<typename T>
 class TestTemplate
 {

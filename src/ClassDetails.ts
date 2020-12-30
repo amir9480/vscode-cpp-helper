@@ -83,7 +83,11 @@ export default class ClassDetails {
                 let classDetails = new ClassDetails;
                 classDetails.start = match.index;
                 classDetails.end = match.index + match[0].length + match2[0].length;
-                classDetails.name = match[6];
+                if (match[6] == 'final') {
+                    classDetails.name = match[5].replace(/([\w\\d_\(\)]+\s+)*([\w_][\w\d_:]*)\s*/g, '$2');
+                } else {
+                    classDetails.name = match[6];
+                }
                 classDetails.template = match[2] ? match[2] : '';
                 classDetails.templateSpecialization = match[7] ? match[7] : '';
                 for (let i in result) {

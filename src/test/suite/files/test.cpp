@@ -1,6 +1,5 @@
 #include "test.h"
 
-
 Test::Test()
 {
 
@@ -54,6 +53,16 @@ Test::operator float() const
 }
 
 void TestChild::funcchild(int a)
+{
+
+}
+
+void TestFinal::test(int a)
+{
+
+}
+
+void TestFinalChild::test(int a)
 {
 
 }
