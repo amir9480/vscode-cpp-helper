@@ -29,7 +29,7 @@ function showWelcomeMessage(context: vscode.ExtensionContext) {
 		(previousVersionArray[0] < currentVersionArray[0])
 	)
 	) {
-		message = "C++ Helper updated to " + currentVersion + ". Cast operators now supported.";
+		message = "C++ Helper updated to " + currentVersion + ".";
 	}
 	if (message) {
 		vscode.window.showInformationMessage(message, '⭐️ Rate', '🐞 Report Bug')

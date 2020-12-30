@@ -86,6 +86,14 @@ export default class Helpers {
                             fileToOpen = path.join(directory, patterns[i].replace('{FILE}', name));
                         }
                         if (fs.existsSync(fileToOpen)) {
+                            for (let i in vscode.window.visibleTextEditors) {
+                                let textEditor : vscode.TextEditor = vscode.window.visibleTextEditors[i];
+                                if (textEditor.document.fileName == fileToOpen) {
+                                    resolve(textEditor);
+                                    return;
+                                }
+                            }
+
                             vscode.workspace.openTextDocument(fileToOpen)
                                 .then((doc: vscode.TextDocument) => {
                                     vscode.window.showTextDocument(doc, 1, true)
@@ -111,12 +119,16 @@ export default class Helpers {
                                                     });
                                             });
                                     }
-                                    resolve(vscode.window.activeTextEditor);
+                                    if (vscode.window.activeTextEditor) {
+                                        resolve(vscode.window.activeTextEditor);
+                                    }
                                 });
                         }
                     }
                 }
-                resolve(vscode.window.activeTextEditor);
+                if (vscode.window.activeTextEditor) {
+                    resolve(vscode.window.activeTextEditor);
+                }
             }
         });
     }
