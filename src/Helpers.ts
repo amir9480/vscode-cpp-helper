@@ -102,31 +102,32 @@ export default class Helpers {
                                         });
                                 });
                             return;
-                        } else if (notFoundBehavior === 'Create source file' && extension?.toLowerCase() !== 'cpp') {
-                            let workspaceEdit = new vscode.WorkspaceEdit;
-                            workspaceEdit.createFile(vscode.Uri.file(directory + '/' + name + '.cpp'), {overwrite: false, ignoreIfExists: true});
-                            return vscode.workspace.applyEdit(workspaceEdit)
-                                .then(function (result: boolean) {
-                                    if (result) {
-                                        return vscode.workspace.openTextDocument(directory + '/' + name + '.cpp')
-                                            .then((doc: vscode.TextDocument) => {
-                                                vscode.window.showTextDocument(doc, 1, true)
-                                                    .then(function (textEditor: vscode.TextEditor) {
-                                                        textEditor.insertSnippet(new vscode.SnippetString("#include \"" + name + "." + extension + "\"\n"))
-                                                            .then(function () {
-                                                                resolve(textEditor);
-                                                            });
-                                                    });
-                                            });
-                                    }
-                                    if (vscode.window.activeTextEditor) {
-                                        resolve(vscode.window.activeTextEditor);
-                                    }
-                                });
                         }
                     }
                 }
-                if (vscode.window.activeTextEditor) {
+
+                if (notFoundBehavior === 'Create source file' && extension?.toLowerCase() !== 'cpp') {
+                    let workspaceEdit = new vscode.WorkspaceEdit;
+                    workspaceEdit.createFile(vscode.Uri.file(directory + '/' + name + '.cpp'), {overwrite: false, ignoreIfExists: true});
+                    return vscode.workspace.applyEdit(workspaceEdit)
+                        .then(function (result: boolean) {
+                            if (result) {
+                                return vscode.workspace.openTextDocument(directory + '/' + name + '.cpp')
+                                    .then((doc: vscode.TextDocument) => {
+                                        vscode.window.showTextDocument(doc, 1, true)
+                                            .then(function (textEditor: vscode.TextEditor) {
+                                                textEditor.insertSnippet(new vscode.SnippetString("#include \"" + name + "." + extension + "\"\n"))
+                                                    .then(function () {
+                                                        resolve(textEditor);
+                                                    });
+                                            });
+                                    });
+                            }
+                            if (vscode.window.activeTextEditor) {
+                                resolve(vscode.window.activeTextEditor);
+                            }
+                        });
+                } else if (vscode.window.activeTextEditor) {
                     resolve(vscode.window.activeTextEditor);
                 }
             }
