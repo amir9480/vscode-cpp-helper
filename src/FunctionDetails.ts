@@ -88,21 +88,22 @@ export default class FunctionDetails {
         });
         let result:FunctionDetails[] = [];
         let templateRegex = Helpers.templateRegex;
+        let nodiscardRegex = "(\\[\\[nodiscard\\]\\])?";
         let returnTypeRegex = "((([\\w_][\\w\\d<>_\\[\\]\\.:\,]*\\s+)*[\\w_][\\w\\d<>_\\[\\]\\(\\)\\.:\,]*)(\\**\\&{0,2}))?";
         let funcRegex = "((\\**\\&{0,2})((operator\\s*([+-=*\\/%!<>&|~\\[\\]^&\\.\\,]\\s*|\\(\\))+)|(~?[\\w_][\\w\\d_]*)))";
         let funcParamsRegex = "\\((([^\\)]*)|(.+\\([^\\)]*\\).+))\\)";
         let afterParamsRegex = "([^;^)]*)\\;";
 
-        let funcRegexStr = templateRegex + returnTypeRegex + '\\s+' + funcRegex + '\\s*' + funcParamsRegex + '\\s*' + afterParamsRegex;
+        let funcRegexStr = templateRegex + nodiscardRegex + '\\s+' + returnTypeRegex + '\\s+' + funcRegex + '\\s*' + funcParamsRegex + '\\s*' + afterParamsRegex;
         let regex = new RegExp(funcRegexStr, 'gm');
         let match = null, match2 = null;
         while (match = regex.exec(source)) {
             let funcDetails = new FunctionDetails;
             funcDetails.template = match[2] ? match[2] : "";
-            funcDetails.name = match[10];
-            funcDetails.arguments = match[14] ? match[14] : "";
-            funcDetails.before = ((match[5] ? match[5].trim() : "") + (match[7] ? match[7].trim() : "") + (match[9] ? match[9].trim() : "")).replace(/(public|private|protected)\s*:\s*/, '');
-            funcDetails.after = match[17] ? match[17] : "";
+            funcDetails.name = match[11];
+            funcDetails.arguments = match[15] ? match[15] : "";
+            funcDetails.before = ((match[6] ? match[6].trim() : "") + (match[8] ? match[8].trim() : "") + (match[10] ? match[10].trim() : "")).replace(/(public|private|protected)\s*:\s*/, '');
+            funcDetails.after = match[18] ? match[18] : "";
             funcDetails.start = match.index;
             funcDetails.end = match.index + match[0].length;
             if (funcDetails.before === 'operator') {
