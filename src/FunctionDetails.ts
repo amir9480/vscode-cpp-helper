@@ -83,9 +83,7 @@ export default class FunctionDetails {
      * @param source
      */
     public static parseFunctions(source:string) : Array<FunctionDetails> {
-        source = source.replace(/\/\/[^\n^\r]+/g, function (mat) {
-            return '/'.repeat(mat.length);
-        });
+        source = source.replace(/\/\/[^\n^\r]+/g, '');
         let result:FunctionDetails[] = [];
         let templateRegex = Helpers.templateRegex;
         let attributeRegex = "(\\[\\[[^\\]]+\\]\\])*";
