@@ -88,13 +88,13 @@ export default class FunctionDetails {
         });
         let result:FunctionDetails[] = [];
         let templateRegex = Helpers.templateRegex;
-        let nodiscardRegex = "(\\[\\[nodiscard\\]\\])?";
-        let returnTypeRegex = "((([\\w_][\\w\\d<>_\\[\\]\\.:\,]*\\s+)*[\\w_][\\w\\d<>_\\[\\]\\(\\)\\.:\,]*)(\\**\\&{0,2}))?";
+        let attributeRegex = "(\\[\\[[^\\]]+\\]\\])*";
+        let returnTypeRegex = "((?!template\\b)\\b(([\\w_][\\w\\d<>_\\[\\]\\.:\,]*\\s+)*[\\w_][\\w\\d<>_\\[\\]\\(\\)\\.:\,]*)(\\**\\&{0,2}))?";
         let funcRegex = "((\\**\\&{0,2})((operator\\s*([+-=*\\/%!<>&|~\\[\\]^&\\.\\,]\\s*|\\(\\))+)|(~?[\\w_][\\w\\d_]*)))";
         let funcParamsRegex = "\\((([^\\)]*)|(.+\\([^\\)]*\\).+))\\)";
         let afterParamsRegex = "([^;^)]*)\\;";
 
-        let funcRegexStr = templateRegex + nodiscardRegex + '\\s+' + returnTypeRegex + '\\s+' + funcRegex + '\\s*' + funcParamsRegex + '\\s*' + afterParamsRegex;
+        let funcRegexStr = templateRegex + attributeRegex + '\\s+' + returnTypeRegex + '\\s+' + funcRegex + '\\s*' + funcParamsRegex + '\\s*' + afterParamsRegex;
         let regex = new RegExp(funcRegexStr, 'gm');
         let match = null, match2 = null;
         while (match = regex.exec(source)) {

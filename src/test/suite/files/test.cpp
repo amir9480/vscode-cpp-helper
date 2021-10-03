@@ -42,6 +42,21 @@ std::tuple<int, float> Test::func5(std::function<void(int, float)>&& a)
 
 }
 
+void Test::func6(int a)
+{
+
+}
+
+void Test::func7(int a)
+{
+
+}
+
+void Test::func8(int a)
+{
+
+}
+
 Test& Test::operator = (const Test& _other)
 {
 

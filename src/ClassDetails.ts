@@ -73,7 +73,7 @@ export default class ClassDetails {
     public static parseClasses(source: string): Array<ClassDetails> {
         let result: Array<ClassDetails> = [];
         let templateRegex = Helpers.templateRegex;
-        let classRegex = "(class|struct)\\s+([\\w\\d_\\(\\)]+\\s+)*([\\w_][\\w\\d_:]*)\\s*(<.*>)?\\s*(\:[^{]+)?\\s*{";
+        let classRegex = "(class|struct)(\\s*\\[\\[[^\\]]+\\]\\])*\\s+([\\w\\d_\\(\\)]+\\s+)*([\\w_][\\w\\d_:]*)\\s*(<.*>)?\\s*(\:[^{]+)?\\s*{";
         let classContentRegex = Helpers.scopeRegex;
         let match: any, match2: any;
         let regex = new RegExp(templateRegex + classRegex, 'gm');
@@ -83,13 +83,13 @@ export default class ClassDetails {
                 let classDetails = new ClassDetails;
                 classDetails.start = match.index;
                 classDetails.end = match.index + match[0].length + match2[0].length;
-                if (match[6] == 'final') {
-                    classDetails.name = match[5].replace(/([\w\\d_\(\)]+\s+)*([\w_][\w\d_:]*)\s*/g, '$2');
+                if (match[7] == 'final') {
+                    classDetails.name = match[6].replace(/([\w\\d_\(\)]+\s+)*([\w_][\w\d_:]*)\s*/g, '$2');
                 } else {
-                    classDetails.name = match[6];
+                    classDetails.name = match[7];
                 }
                 classDetails.template = match[2] ? match[2] : '';
-                classDetails.templateSpecialization = match[7] ? match[7] : '';
+                classDetails.templateSpecialization = match[8] ? match[8] : '';
                 for (let i in result) {
                     if (result[i].start < classDetails.start && result[i].end > classDetails.end) {
                         classDetails.parent = result[i];
