@@ -6,7 +6,7 @@
 
 #define UFUNCTION(TEST)
 
-struct Test
+struct [[nodiscard]] Test
 {
     Test();
     ~Test();
@@ -23,6 +23,16 @@ struct Test
     void func4(T10 a, const T11& b);
 
     std::tuple<int, float> func5(std::function<void(int, float)>&& a);
+
+    [[nodiscard]]
+    void func6(int a);
+
+    [[using CC: opt(1), debug]]
+    void func7(int a);
+
+    [[debug]]
+    [[nodiscard]]
+    void func8(int a);
 
     Test& operator = (const Test& _other);
 
