@@ -29,10 +29,10 @@ function showWelcomeMessage(context: vscode.ExtensionContext) {
 		(previousVersionArray[0] < currentVersionArray[0])
 	)
 	) {
-		message = "C++ Helper updated to " + currentVersion + ".";
+		message = "C++ Helper updated to " + currentVersion + " - New feature: Attributes support.";
 	}
 	if (message) {
-		vscode.window.showInformationMessage(message, '⭐️ Rate', '🐞 Report Bug')
+		vscode.window.showInformationMessage(message, '⭐️ Star on Github', '🐞 Report Bug')
 			.then(function (val: string | undefined) {
 				if (val === '⭐️ Rate') {
 					vscode.env.openExternal(vscode.Uri.parse('https://marketplace.visualstudio.com/items?itemName=amiralizadeh9480.cpp-helper&ssr=false#review-details'));
