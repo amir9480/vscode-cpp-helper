@@ -2,7 +2,7 @@
 	"name": "cpp-helper",
 	"displayName": "C++ Helper",
 	"description": "Create implementation for c++ function prototypes.",
-	"version": "0.2.2",
+	"version": "0.3.0",
 	"icon": "images/icon.png",
 	"publisher": "amiralizadeh9480",
 	"engines": {
