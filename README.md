@@ -58,6 +58,11 @@ If you found any wrong implementation please let me know in [issues](https://git
 
 ## Change Log
 
+### 0.3.0
+* Add functions and classes attributes support.
+* Fix default parameter with parentheses bug (#35).
+* Fix trailing parameters comment issue (#31).
+
 ### 0.2.1
 * Fix code indent bug when EOL was `LF`.
 * Fix member `operator +`, `operator -` bug.

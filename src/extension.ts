@@ -29,7 +29,7 @@ function showWelcomeMessage(context: vscode.ExtensionContext) {
 		(previousVersionArray[0] < currentVersionArray[0])
 	)
 	) {
-		message = "C++ Helper updated to " + currentVersion + " - New feature: Attributes support.";
+		message = "C++ Helper updated to " + currentVersion + ".";
 	}
 	if (message) {
 		vscode.window.showInformationMessage(message, '⭐️ Star on Github', '🐞 Report Bug')
