@@ -57,6 +57,16 @@ void Test::func8(int a)
 
 }
 
+void Test::func9(int a)
+{
+
+}
+
+void Test::func10(int a, float b)
+{
+
+}
+
 Test& Test::operator = (const Test& _other)
 {
 

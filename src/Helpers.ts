@@ -155,6 +155,6 @@ export default class Helpers {
      * @param args
      */
     public static removeArgumentDefault(args: string): string {
-        return args.replace(/([^=^,]+)(\s+=\s*[^\,^\)^>]*)/g, '$1').replace(/([^=^,]+)(=\s*[^\,]*)/g, '$1').trim();
+        return args.replace(/([^=^,]+)(\s+=\s*[^\,^>]*)/g, '$1').replace(/([^=^,]+)(=\s*[^\,]*)/g, '$1').trim();
     }
 }

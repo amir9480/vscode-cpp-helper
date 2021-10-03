@@ -34,6 +34,10 @@ struct [[nodiscard]] Test
     [[nodiscard]]
     void func8(int a);
 
+    void func9(int a = int(10));
+
+    void func10(int a = int(10), float b = float(3.14f));
+
     Test& operator = (const Test& _other);
 
     operator float () const;
