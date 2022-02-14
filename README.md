@@ -58,6 +58,9 @@ If you found any wrong implementation please let me know in [issues](https://git
 
 ## Change Log
 
+### 0.3.1
+* Bug fixes (#49, #47, #41)
+
 ### 0.3.0
 * Add functions and classes attributes support.
 * Fix default parameter with parentheses bug (#35).
