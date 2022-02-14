@@ -67,6 +67,11 @@ void Test::func10(int a, float b)
 
 }
 
+Test Test::func11(int row, int column, const Test& parent) const
+{
+
+}
+
 Test& Test::operator = (const Test& _other)
 {
 

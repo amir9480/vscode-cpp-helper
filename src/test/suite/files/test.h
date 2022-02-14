@@ -34,9 +34,14 @@ struct [[nodiscard]] Test
     [[nodiscard]]
     void func8(int a);
 
+    /**
+     * Function with comment
+     */
     void func9(int a = int(10));
 
     void func10(int a = int(10), float b = float(3.14f)); // Comment about func10
+
+    Test func11(int row, int column, const Test& parent = Test()) const;
 
     Test& operator = (const Test& _other);
 

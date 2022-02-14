@@ -88,9 +88,11 @@ export default class FunctionDetails {
         let attributeRegex = "(\\[\\[[^\\]]+\\]\\])*";
         let returnTypeRegex = "((?!template\\b)\\b(([\\w_][\\w\\d<>_\\[\\]\\.:\,]*\\s+)*[\\w_][\\w\\d<>_\\[\\]\\(\\)\\.:\,]*)(\\**\\&{0,2}))?";
         let funcRegex = "((\\**\\&{0,2})((operator\\s*([+-=*\\/%!<>&|~\\[\\]^&\\.\\,]\\s*|\\(\\))+)|(~?[\\w_][\\w\\d_]*)))";
-        let funcParamsRegex = "\\(((?:[^)(]*(\\((?:[^)(]*?)*\\))?)*)\\)";
+        let funcParamsRegex = "\\(((?:[^)(]*(\\((?:[^)(]*?)*\\))?)+)\\)";
         let afterParamsRegex = "([^;\\)]*)\\;";
 
+        source = source.replace(/\/\/[^\r\n]+/g, ss => '#'.repeat(ss ? ss.length : 1));
+        source = source.replace(/\/\*\*[\s\S]+(?=\*\/)\*\//g, ss => ss.replace(/[^\r\n]+/g, sss => '#'.repeat(sss ? sss.length : 1) + '\n'));
         let funcRegexStr = templateRegex + attributeRegex + '\\s+' + returnTypeRegex + '\\s+' + funcRegex + '\\s*' + funcParamsRegex + '\\s*' + afterParamsRegex;
         let regex = new RegExp(funcRegexStr, 'gm');
         let match = null, match2 = null;
