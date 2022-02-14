@@ -45,7 +45,7 @@ export default class FunctionDetails {
                 out += this.before + ' ';
             }
         }
-        out += this.name + '(' + Helpers.removeArgumentDefault(this.arguments) + ') ' + after;
+        out += this.name + '(' + Helpers.removeArgumentDefault(this.arguments) + ')' + (typeof after === 'string' && after.length > 0 ? ' ' + after : '');
 
         if (includeBody) {
             out += '\n{\n' + (snippet ? Helpers.spacer() + '${0}' : '') + '\n}';
