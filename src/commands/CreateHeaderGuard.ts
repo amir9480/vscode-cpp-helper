@@ -7,9 +7,13 @@ export default function () {
         let name = fileName.replace(/^.*[\\\/]/, '').replace(/\.[^\.]+$/, '');
         let headerGuard: any = vscode.workspace.getConfiguration("CppHelper").get<string>('HeaderGuardPattern');
         headerGuard = headerGuard.replace('{FILE}', name.toUpperCase());
-        if (vscode.window.activeTextEditor) {
-            vscode.window.activeTextEditor.insertSnippet(new vscode.SnippetString('\n#endif // ' + headerGuard), vscode.window.activeTextEditor.document.positionAt(vscode.window.activeTextEditor.document.getText().length));
-            vscode.window.activeTextEditor.insertSnippet(new vscode.SnippetString('#ifndef ' + headerGuard + '\n#define ' + headerGuard + '\n\n'), vscode.window.activeTextEditor.document.positionAt(0));
+        
+        const editor = vscode.window.activeTextEditor;
+        if (editor) {
+            editor.insertSnippet(new vscode.SnippetString('\n#endif // ' + headerGuard), editor.document.positionAt(editor.document.getText().length))
+            .then(_ => {
+                editor.insertSnippet(new vscode.SnippetString('#ifndef ' + headerGuard + '\n#define ' + headerGuard + '\n\n'), editor.document.positionAt(0));
+            });
         }
     }
 }
