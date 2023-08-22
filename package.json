@@ -144,7 +144,9 @@
 						"type": "string",
 						"enum": [
 							"Implement in same file",
-							"Create source file"
+							"Create source file",
+							"Show error",
+							"Do nothing"
 						],
 						"default": "Implement in same file",
 						"description": "What happen if source file of a header file not found."
