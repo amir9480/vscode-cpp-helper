@@ -70,6 +70,7 @@ export default class Helpers {
      */
     public static openSourceFile(): Promise<vscode.TextEditor> {
         let patterns: any = vscode.workspace.getConfiguration("CppHelper").get<Array<string>>('SourcePattern');
+        let replacements: Array<{find:string, replace:string}> = vscode.workspace.getConfiguration("CppHelper").get("FindReplaceStrings") as Array<{find:string, replace:string}>;
         let notFoundBehavior: any = vscode.workspace.getConfiguration("CppHelper").get<string>('SourceNotFoundBehavior');
         return new Promise(function (resolve, reject) {
             let fileName = vscode.window.activeTextEditor?.document.fileName;
@@ -85,6 +86,9 @@ export default class Helpers {
                         } else {
                             fileToOpen = path.join(directory, patterns[i].replace('{FILE}', name));
                         }
+                        replacements.forEach(pair => {
+                            fileToOpen = fileToOpen.replace(pair.find, pair.replace);
+                        });
                         if (fs.existsSync(fileToOpen)) {
                             for (let i in vscode.window.visibleTextEditors) {
                                 let textEditor : vscode.TextEditor = vscode.window.visibleTextEditors[i];

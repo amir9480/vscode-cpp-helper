@@ -2,7 +2,7 @@
 	"name": "cpp-helper",
 	"displayName": "C++ Helper",
 	"description": "Create implementation for c++ function prototypes.",
-	"version": "0.3.2",
+	"version": "0.3.3",
 	"icon": "images/icon.png",
 	"publisher": "amiralizadeh9480",
 	"engines": {
@@ -95,6 +95,25 @@
 							"/source/{FILE}.c"
 						],
 						"description": "Source file pattern for headers."
+					},
+					"CppHelper.FindReplaceStrings": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"find": {
+									"type": "string"
+								},
+								"replace": {
+									"type": "string"
+								}
+							},
+							"required": ["find", "replace"]
+						},
+						"default": [
+							{ "find":"Public", "replace": "Private" }
+						],
+						"description": "Pairs of strings to find/replace within the path"
 					},
 					"CppHelper.HeaderGuardPattern": {
 						"type": "string",
