@@ -111,7 +111,7 @@
 							"required": ["find", "replace"]
 						},
 						"default": [
-							{ "find":"Public", "replace": "Private" }
+							{ "find":"\\Public\\", "replace": "\\Private\\" }
 						],
 						"description": "Pairs of strings to find/replace within the path"
 					},
