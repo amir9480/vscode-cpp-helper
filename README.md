@@ -100,8 +100,3 @@ If you found any wrong implementation please let me know in [issues](https://git
 ### 0.0.3
 * Keeping the order of implementations synced to declarations as much as possible.
 
-## Donation
-
-<a href="https://github.com/amir9480/amir9480/blob/master/donation.md">
-    <img src="https://raw.githubusercontent.com/amir9480/amir9480/master/donate.png" width="300">
-</a>
