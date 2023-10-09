@@ -110,10 +110,8 @@
 							},
 							"required": ["find", "replace"]
 						},
-						"default": [
-							{ "find":"\\Public\\", "replace": "\\Private\\" }
-						],
-						"description": "Pairs of strings to find/replace within the path"
+						"default": [],
+						"description": "Pairs of strings to find/replace within the path."
 					},
 					"CppHelper.HeaderGuardPattern": {
 						"type": "string",

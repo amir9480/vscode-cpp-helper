@@ -86,8 +86,9 @@ export default class Helpers {
                         } else {
                             fileToOpen = path.join(directory, patterns[i].replace('{FILE}', name));
                         }
+                        fileToOpen =  fileToOpen.replace(/\\/g, '/');
                         replacements.forEach(pair => {
-                            fileToOpen = fileToOpen.replace(pair.find, pair.replace);
+                            fileToOpen = fileToOpen.replace(new RegExp(pair.find.replace(/\\/g, '/').replace(/\//g, '\\/'), 'g'), pair.replace.replace(/\\/g, '/'));
                         });
                         if (fs.existsSync(fileToOpen)) {
                             for (let i in vscode.window.visibleTextEditors) {
@@ -112,9 +113,9 @@ export default class Helpers {
 
                 if (notFoundBehavior === 'Create source file' && extension?.toLowerCase() !== 'cpp') {
                     let workspaceEdit = new vscode.WorkspaceEdit;
-                    let newdirectory = directory;
+                    let newdirectory = directory.replace(/\\/g, '/');
                     replacements.forEach(pair => {
-                        newdirectory = newdirectory.replace(pair.find, pair.replace);
+                        newdirectory = newdirectory.replace(new RegExp(pair.find.replace(/\\/g, '/').replace(/\//g, '\\/'), 'g'), pair.replace.replace(/\\/g, '/'));
                     });
                     workspaceEdit.createFile(vscode.Uri.file(newdirectory + '/' + name + '.cpp'), {overwrite: false, ignoreIfExists: true});
                     return vscode.workspace.applyEdit(workspaceEdit)
