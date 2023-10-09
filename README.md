@@ -83,6 +83,9 @@ If you found any wrong implementation please let me know in [issues](https://git
 
 ## Change Log
 
+### 0.3.3
+Add new `CppHelper.FindReplaceStrings` configuration (#70)
+
 ### 0.3.1
 * Bug fixes (#49, #47, #41)
 
