@@ -48,6 +48,8 @@ Show or hide "Create Header Guard" in context menu.
 What happen if source file of a header file not found.
 * Implement in same file
 * Create source file
+* Show error
+* Do nothing
 
 ## Known Issues
 If you implement a previously implemented function duplicate implementation will happen.

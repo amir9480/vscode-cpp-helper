@@ -70,6 +70,7 @@ export default class Helpers {
      */
     public static openSourceFile(): Promise<vscode.TextEditor> {
         let patterns: any = vscode.workspace.getConfiguration("CppHelper").get<Array<string>>('SourcePattern');
+        let replacements: Array<{find:string, replace:string}> = vscode.workspace.getConfiguration("CppHelper").get("FindReplaceStrings") as Array<{find:string, replace:string}>;
         let notFoundBehavior: any = vscode.workspace.getConfiguration("CppHelper").get<string>('SourceNotFoundBehavior');
         return new Promise(function (resolve, reject) {
             let fileName = vscode.window.activeTextEditor?.document.fileName;
@@ -85,6 +86,9 @@ export default class Helpers {
                         } else {
                             fileToOpen = path.join(directory, patterns[i].replace('{FILE}', name));
                         }
+                        replacements.forEach(pair => {
+                            fileToOpen = fileToOpen.replace(pair.find, pair.replace);
+                        });
                         if (fs.existsSync(fileToOpen)) {
                             for (let i in vscode.window.visibleTextEditors) {
                                 let textEditor : vscode.TextEditor = vscode.window.visibleTextEditors[i];
@@ -108,11 +112,15 @@ export default class Helpers {
 
                 if (notFoundBehavior === 'Create source file' && extension?.toLowerCase() !== 'cpp') {
                     let workspaceEdit = new vscode.WorkspaceEdit;
-                    workspaceEdit.createFile(vscode.Uri.file(directory + '/' + name + '.cpp'), {overwrite: false, ignoreIfExists: true});
+                    let newdirectory = directory;
+                    replacements.forEach(pair => {
+                        newdirectory = newdirectory.replace(pair.find, pair.replace);
+                    });
+                    workspaceEdit.createFile(vscode.Uri.file(newdirectory + '/' + name + '.cpp'), {overwrite: false, ignoreIfExists: true});
                     return vscode.workspace.applyEdit(workspaceEdit)
                         .then(function (result: boolean) {
                             if (result) {
-                                return vscode.workspace.openTextDocument(directory + '/' + name + '.cpp')
+                                return vscode.workspace.openTextDocument(newdirectory + '/' + name + '.cpp')
                                     .then((doc: vscode.TextDocument) => {
                                         vscode.window.showTextDocument(doc, 1, true)
                                             .then(function (textEditor: vscode.TextEditor) {
@@ -127,9 +135,10 @@ export default class Helpers {
                                 resolve(vscode.window.activeTextEditor);
                             }
                         });
-                } else if (vscode.window.activeTextEditor) {
+                } else if (notFoundBehavior === "Implement in same file" && vscode.window.activeTextEditor) {
                     resolve(vscode.window.activeTextEditor);
                 }
+                reject("Could not find or create matching source file");
             }
         });
     }
