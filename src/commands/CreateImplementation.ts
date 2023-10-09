@@ -115,9 +115,17 @@ export default function () {
             var activeEditor = vscode.window.activeTextEditor;
             var selections = activeEditor.selections;
             selections = selections.sort((a:vscode.Selection, b: vscode.Selection) => a.start.isAfter(b.start) ? 1 : -1);
-            Helpers.openSourceFile().then(function (doc : vscode.TextEditor) {
+            Helpers.openSourceFile()
+            .then(function (doc : vscode.TextEditor) {
                 create(activeEditor, selections, doc);
+            })
+            .catch(function (error) {
+                let notFoundBehavior: any = vscode.workspace.getConfiguration("CppHelper").get<string>('SourceNotFoundBehavior');
+                if (notFoundBehavior === "Show error") {
+                    vscode.window.showErrorMessage(error);
+                }
             });
+
         }
     }
 }

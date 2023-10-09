@@ -93,6 +93,8 @@ export default class FunctionDetails {
 
         source = source.replace(/\/\/[^\r\n]+/g, ss => '#'.repeat(ss ? ss.length : 1));
         source = source.replace(/\/\*\*[\s\S]+(?=\*\/)\*\//g, ss => ss.replace(/[^\r\n]+/g, sss => '#'.repeat(sss ? sss.length : 1) + '\n'));
+        // Strip Unreal Engine specifiers so they don't break parsing and crash VSCode
+        source = source.replace(/(UCLASS|UPROPERTY|UFUNCTION|UINTERFACE|UENUM|USTRUCT)[^\r\n]+/g, ss => '#'.repeat(ss ? ss.length : 1));
         let funcRegexStr = templateRegex + attributeRegex + '\\s+' + returnTypeRegex + '\\s+' + funcRegex + '\\s*' + funcParamsRegex + '\\s*' + afterParamsRegex;
         let regex = new RegExp(funcRegexStr, 'gm');
         let match = null, match2 = null;
