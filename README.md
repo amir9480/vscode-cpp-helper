@@ -51,6 +51,29 @@ What happen if source file of a header file not found.
 * Show error
 * Do nothing
 
+### CppHelper.FindReplaceStrings
+Pairs of strings to find/replace within the path
+
+Example:
+```json
+"CppHelper.FindReplaceStrings": [
+    {
+        "find": "/include/Public",
+        "replace": "/src/Private"
+    }
+],
+```
+Above configuration will replace all `/include/Public` in your path to `/src/Private` when trying to find source code of header file.
+You can also use regular expressions.
+```json
+"CppHelper.FindReplaceStrings": [
+    {
+        "find": "/include/Public/([^\\/]+)",
+        "replace": "/src/Private/$1"
+    }
+],
+```
+
 ## Known Issues
 If you implement a previously implemented function duplicate implementation will happen.
 
