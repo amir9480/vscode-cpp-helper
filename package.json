@@ -148,6 +148,11 @@
 						],
 						"default": "Implement in same file",
 						"description": "What happen if source file of a header file not found."
+					},
+					"CppHelper.showUpdateMessage": {
+						"type": "boolean",
+						"default": true,
+						"description": "Whether to show the update message when the extension updates."
 					}
 				}
 			}
