@@ -2,7 +2,7 @@
 	"name": "cpp-helper",
 	"displayName": "C++ Helper",
 	"description": "Create implementation for c++ function prototypes.",
-	"version": "0.3.3",
+	"version": "0.3.4",
 	"icon": "images/icon.png",
 	"publisher": "amiralizadeh9480",
 	"engines": {
@@ -108,7 +108,10 @@
 									"type": "string"
 								}
 							},
-							"required": ["find", "replace"]
+							"required": [
+								"find",
+								"replace"
+							]
 						},
 						"default": [],
 						"description": "Pairs of strings to find/replace within the path."
