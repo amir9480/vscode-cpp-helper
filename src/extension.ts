@@ -32,16 +32,19 @@ function showWelcomeMessage(context: vscode.ExtensionContext) {
 		message = "C++ Helper updated to " + currentVersion + ".";
 	}
 	if (message) {
-		vscode.window.showInformationMessage(message, '⭐️ Star on Github', '🐞 Report Bug')
-			.then(function (val: string | undefined) {
-				if (val === '⭐️ Rate') {
-					vscode.env.openExternal(vscode.Uri.parse('https://marketplace.visualstudio.com/items?itemName=amiralizadeh9480.cpp-helper&ssr=false#review-details'));
-				} else if (val === '🐞 Report Bug') {
-					vscode.env.openExternal(vscode.Uri.parse('https://github.com/amir9480/vscode-cpp-helper/issues'));
-				} else if (val === '⭐️ Star on Github') {
-					vscode.env.openExternal(vscode.Uri.parse('https://github.com/amir9480/vscode-cpp-helper'));
-				}
-			});
+		const showUpdateMessage = vscode.workspace.getConfiguration("CppHelper").get<boolean>('showUpdateMessage');
+		if (showUpdateMessage) {
+			vscode.window.showInformationMessage(message, '⭐️ Star on Github', '🐞 Report Bug')
+				.then(function (val: string | undefined) {
+					if (val === '⭐️ Rate') {
+						vscode.env.openExternal(vscode.Uri.parse('https://marketplace.visualstudio.com/items?itemName=amiralizadeh9480.cpp-helper&ssr=false#review-details'));
+					} else if (val === '🐞 Report Bug') {
+						vscode.env.openExternal(vscode.Uri.parse('https://github.com/amir9480/vscode-cpp-helper/issues'));
+					} else if (val === '⭐️ Star on Github') {
+						vscode.env.openExternal(vscode.Uri.parse('https://github.com/amir9480/vscode-cpp-helper'));
+					}
+				});
+		}
 		context.globalState.update('cpp-helper-version', currentVersion);
 	}
 }
